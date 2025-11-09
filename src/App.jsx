@@ -15,11 +15,9 @@ function App() {
   const [showStandings, setShowStandings] = useState(false);
 
   const seasons = [
-    { value: null, label: '2024/25' },
+    { value: null, label: '2025/26' },
+    { value: 2024, label: '2024/23' },
     { value: 2023, label: '2023/24' },
-    { value: 2022, label: '2022/23' },
-    { value: 2021, label: '2021/22' },
-    { value: 2020, label: '2020/21' }
   ];
 
   if (loading) {
