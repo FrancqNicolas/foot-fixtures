@@ -3,7 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/database.js';
 import matchRoutes from './routes/matchRoutes.js';
-import seedRoutes from './routes/seedRoutes.js';
 import Match from './models/Match.js';
 import { getChampionsLeagueMatches, getChampionsLeagueStandings, getMatchDetails, transformMatch } from './services/footballDataService.js';
 import {
@@ -28,7 +27,6 @@ connectDB();
 
 // Routes
 app.use('/api/matches', matchRoutes);
-app.use('/api/seed', seedRoutes);
 
 // Route to sync matches from football-data.org
 app.post('/api/sync-matches', async (req, res) => {
