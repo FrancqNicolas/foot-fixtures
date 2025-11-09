@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { sortMatches } from '../utils/matchUtils';
 
 const API_URL = 'http://localhost:5000/api';
@@ -8,7 +8,7 @@ export const useMatches = (season = null) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const syncMatches = async (showLoader = false) => {
+  const syncMatches = useCallback(async (showLoader = false) => {
     try {
       if (showLoader) {
         setLoading(true);
@@ -45,7 +45,7 @@ export const useMatches = (season = null) => {
         setLoading(false);
       }
     }
-  };
+  }, [season]);
 
   useEffect(() => {
     syncMatches(true);
@@ -55,7 +55,7 @@ export const useMatches = (season = null) => {
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [season]);
+  }, [syncMatches]);
 
   return { matches, loading, error };
 };
