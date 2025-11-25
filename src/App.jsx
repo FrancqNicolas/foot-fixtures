@@ -5,7 +5,14 @@ import MatchDetailsPanel from './components/MatchDetailsPanel';
 import StandingsModal from './components/StandingsModal';
 import { useMatches } from './hooks/useMatches';
 import { groupMatchesByDate } from './utils/matchUtils';
+import { PHASE_FILTERS } from './config/api';
 import './App.css';
+
+const SEASONS = [
+  { value: null, label: '2025/26' },
+  { value: 2024, label: '2024/25' },
+  { value: 2023, label: '2023/24' },
+];
 
 function App() {
   const [selectedSeason, setSelectedSeason] = useState(null);
@@ -13,12 +20,6 @@ function App() {
   const [selectedPhase, setSelectedPhase] = useState(null);
   const [selectedMatchId, setSelectedMatchId] = useState(null);
   const [showStandings, setShowStandings] = useState(false);
-
-  const seasons = [
-    { value: null, label: '2025/26' },
-    { value: 2024, label: '2024/25' },
-    { value: 2023, label: '2023/24' },
-  ];
 
   if (loading) {
     return (
@@ -40,16 +41,12 @@ function App() {
     if (!selectedPhase) return matches;
 
     if (selectedPhase === 'league') {
-      return matches.filter(match =>
-        match.stage === 'Group Stage' || match.stage === 'League Phase'
-      );
+      return matches.filter(match => PHASE_FILTERS.LEAGUE.includes(match.stage));
     }
 
     if (selectedPhase === 'knockout') {
       return matches.filter(match =>
-        match.stage !== 'Group Stage' &&
-        match.stage !== 'League Phase' &&
-        match.stage !== 'Preliminary Round'
+        PHASE_FILTERS.KNOCKOUT.includes(match.stage)
       );
     }
 
@@ -88,7 +85,7 @@ function App() {
           onChange={(e) => setSelectedSeason(e.target.value ? parseInt(e.target.value) : null)}
           className="season-select"
         >
-          {seasons.map((season) => (
+          {SEASONS.map((season) => (
             <option key={season.value || 'current'} value={season.value || ''}>
               {season.label}
             </option>

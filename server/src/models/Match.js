@@ -57,6 +57,22 @@ const matchSchema = new mongoose.Schema({
   stage: {
     type: String,
     default: 'Quarter-Finals'
+  },
+  details: {
+    type: mongoose.Schema.Types.Mixed,
+    default: null
+  },
+  events: {
+    type: Array,
+    default: []
+  },
+  lineups: {
+    type: Array,
+    default: []
+  },
+  detailsFetchedAt: {
+    type: Date,
+    default: null
   }
 }, {
   timestamps: true
